@@ -6,16 +6,20 @@
     <title>Time tracker</title>
 </head>
 <body>
-    <div x-data="{obj: Alpine.store('time_tracker')}" class="container">
-        <h2 x-text="Alpine.store('time_tracker').prop"></h2>
+    <div x-data="{records: []}" x-init="window.TimeTracker.setRecords(records)" x-watch="console.log(records)" class="container">
+        <h2 x-text="window.TimeTracker.prop"></h2>
         <div class="statistic">
 
         </div>
         <div class="time-tracker">
-            <div class="tracker-list"></div>
+            <div class="tracker-list">
+                <template x-for="record in records">
+                    <div x-text="record.message"></div>
+                </template>
+            </div>
             <div class="tracker-input">
                 <div class="tracker-add-record">
-                    <form action="">
+                    <form @submit="submitAdd">
                         <input class="input date-picker" name="date" value="">
                         <input class="input time" name="time" value="">
                         <input class="input message" name="message" value="">
@@ -29,8 +33,8 @@
         </div>
         <div class="token-block">
             <div class="title">Your token:</div>
-            <form class="token-block" @submit="obj.submitToken">
-                <input type="text" name="token" :value="obj.token.get()" style="width: 400px;">
+            <form class="token-block" @submit="submitToken">
+                <input type="text" name="token" :value="window.TimeTracker.token.get()" style="width: 400px;">
                 <button>save</button>
             </form>
         </div>

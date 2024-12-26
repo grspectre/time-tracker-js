@@ -11,14 +11,7 @@ export default class TimeTracker {
         this.recordList = new RecordList();
     }
 
-    submitToken(ev) {
-        ev.preventDefault();
-        let el = ev.target;
-        let input = el.querySelector('input[name="token"]');
-        let tokenValue = input.value;
-        let res = window.Alpine.store('time_tracker').token.update(tokenValue);
-        if (!res) {
-            input.value = window.Alpine.store('time_tracker').token.get();
-        }
+    setRecords(records) {
+        this.recordList.setRecords(records);
     }
 }
