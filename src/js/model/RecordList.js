@@ -3,19 +3,11 @@ import Record from "./Record";
 
 export default class RecordList {
     key = 'tt_record_list';
+    saveInterval = 10;
 
     constructor() {
-        this.load();
         this.records = [];
-    }
-
-    load() {
-        let data = localStorage.getItem(this.key);
-        if (data === null) {
-            return;
-        }
-        let parsed = JSON.parse(data);
-        //parsed.shift()
+        this.loadCached();
     }
 
     /**
@@ -33,8 +25,13 @@ export default class RecordList {
         this.append(new Record(unixTimestamp, message));
     }
 
+    /**
+     * 
+     * @param {Array} records 
+     */
     setRecords(records) {
         this.records = records;
+        this.loadCached();
     }
 
     /**
@@ -47,16 +44,16 @@ export default class RecordList {
         if (this.records.length === 0) {
             this.records.push(record);
         } else if (this.records.length === 1) {
-            record.compare(this.records[0]) >= 0 ? this.records.push(record) : this.records.unshift(record);
+            record.compareTS(this.records[0]) >= 0 ? this.records.push(record) : this.records.unshift(record);
         } else {
-            if (record.compare(this.records[0]) < 0) {
+            if (record.compareTS(this.records[0]) < 0) {
                 this.records.unshift(record);
-            } else if (record.compare(this.records[this.records.length - 1]) >= 0) {
+            } else if (record.compareTS(this.records[this.records.length - 1]) >= 0) {
                 this.records.push(record);
             } else {
                 for (let i = 0; i < this.records.length - 1; i++) {
-                    if (record.compare(this.records[i]) >= 0 && record.compare(this.records[i + 1]) <= 0) {
-                        console.log(record.compare(this.records[i]), record.compare(this.records[i + 1]));
+                    if (record.compareTS(this.records[i]) >= 0 && record.compareTS(this.records[i + 1]) <= 0) {
+                        console.log(record.compareTS(this.records[i]), record.compareTS(this.records[i + 1]));
                         this.records.splice(i, 0, record);
                         return;
                     }
@@ -66,6 +63,7 @@ export default class RecordList {
     }
 
     /**
+     * Получение unix timestamp из строк даты и времени
      * 
      * @param {string} date 
      * @param {string} time 
@@ -106,7 +104,16 @@ export default class RecordList {
         return unixTimestamp;
     }
 
-    save() {
+    loadCached() {
+        let data = localStorage.getItem(this.key);
+        if (data === null) {
+            return;
+        }
+        let parsed = JSON.parse(data);
+        //parsed.shift()
+    }
+
+    saveCached() {
 
     }
 }
