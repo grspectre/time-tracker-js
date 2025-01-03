@@ -1,4 +1,3 @@
-import moment from "moment";
 import Record from "./Record";
 
 export default class RecordList {
@@ -40,7 +39,6 @@ export default class RecordList {
      * @param {Record} record 
      */
     append(record) {
-        console.log(this.records);
         if (this.records.length === 0) {
             this.records.push(record);
         } else if (this.records.length === 1) {
@@ -53,7 +51,6 @@ export default class RecordList {
             } else {
                 for (let i = 0; i < this.records.length - 1; i++) {
                     if (record.compareTS(this.records[i]) >= 0 && record.compareTS(this.records[i + 1]) <= 0) {
-                        console.log(record.compareTS(this.records[i]), record.compareTS(this.records[i + 1]));
                         this.records.splice(i, 0, record);
                         return;
                     }
