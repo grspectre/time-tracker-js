@@ -1,8 +1,10 @@
 import 'normalize.css';
 import 'air-datepicker/air-datepicker.css';
+import './css/global.css';
 import Alpine from 'alpinejs';
 import TimeTracker from './js/TimeTracker';
 import AirDatepicker from 'air-datepicker';
+
 
 window.Alpine = Alpine;
 window.TimeTracker = new TimeTracker();

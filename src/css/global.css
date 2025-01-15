@@ -1,0 +1,35 @@
+/* Стили для всплывающего div */
+.popup {
+    display: none;
+    /* Скрываем по умолчанию */
+    position: absolute;
+    top: 0;
+    /* Выравниваем относительно input */
+    left: 0;
+    transform: translateY(-120%);
+    background-color: #0033a0;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    /* Поверх */
+}
+
+/* Для треугольника у popup */
+.popup::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 10%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 8px 0 8px;
+    border-color: #0033a0 transparent transparent transparent;
+}
+
+/* Когда .popup активен */
+.popup.active {
+    display: block;
+}

@@ -1,4 +1,5 @@
 import Record from "./Record";
+const dayjs = require('dayjs');
 
 export default class RecordList {
     key = 'tt_record_list';
@@ -30,7 +31,7 @@ export default class RecordList {
      */
     setRecords(records) {
         this.records = records;
-        this.loadCached();
+//        this.loadCached();
     }
 
     /**
@@ -71,17 +72,17 @@ export default class RecordList {
         time = time.trim();
 
         if (date === '') {
-            date = moment(Date.now()).format('YYYY-MM-DD');
+            date = dayjs(Date.now()).format('YYYY-MM-DD');
         } else {
             date = date.match(/\d{2}.\d{2}.\d{4}/i);
             if (date === null) {
                 return;
             }
-            date = moment(date, "DD.MM.YYYY").format('YYYY-MM-DD');
+            date = dayjs(date, "DD.MM.YYYY").format('YYYY-MM-DD');
         }
 
         if (time === '') {
-            time = moment(Date.now()).format('HH:mm:ss');
+            time = dayjs(Date.now()).format('HH:mm:ss');
         } else {
             if (time.match(/^\d{2}:\d{2}:\d{2}$/i) === null) {
                 if (time.match(/^\d{2}:\d{2}$/i) !== null) {
