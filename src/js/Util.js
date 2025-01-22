@@ -6,4 +6,9 @@ export default class Util {
             left: rect.left + window.scrollX
         };
     }
+
+    static getDate(dateStr, direction = 'now') {
+        console.log(dateStr);
+        console.log(direction);
+    }
 }

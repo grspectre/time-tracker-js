@@ -20,10 +20,16 @@
             <div class="tracker-input">
                 <div class="tracker-add-record">
                     <form @submit="submitAdd">
-                        <input class="input date-picker" name="date" value="">
-                        <input class="input time" name="time" value="">
-                        <input class="input message" name="message" value="">
-                        <button>add</button>
+                        <div>
+                            <a href="#" data-direction="prev" @click.prevent="window.changeDate">←</a>
+                            <input class="input date-picker" readonly name="date" value="" @focus="window.focusDateField">
+                            <a href="#" data-direction="next" @click.prevent="window.changeDate">→</a>
+                        </div>
+                        <div>
+                            <input class="input time" name="time" value="">
+                            <input class="input message" name="message" value="">    
+                            <button>add</button>
+                        </div>
                     </form>
                 </div>
                 <div class="tracker-favorites">

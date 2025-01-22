@@ -1,5 +1,7 @@
 import Record from "./Record";
 const dayjs = require('dayjs');
+const customParseFormat = require("dayjs/plugin/customParseFormat");
+dayjs.extend(customParseFormat);
 
 export default class RecordList {
     key = 'tt_record_list';
