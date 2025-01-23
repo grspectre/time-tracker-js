@@ -22,7 +22,7 @@
                     <form @submit="submitAdd">
                         <div>
                             <a href="#" data-direction="prev" @click.prevent="window.changeDate">←</a>
-                            <input class="input date-picker" readonly name="date" value="" @focus="window.focusDateField">
+                            <input class="input date-picker" readonly name="date" :value="window.TimeTracker.getCurrentDate()" @focus="window.focusDateField">
                             <a href="#" data-direction="next" @click.prevent="window.changeDate">→</a>
                         </div>
                         <div>

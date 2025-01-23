@@ -80,7 +80,7 @@ export default class RecordList {
             if (date === null) {
                 return;
             }
-            date = dayjs(date, "DD.MM.YYYY").format('YYYY-MM-DD');
+            date = dayjs(date[0], "DD.MM.YYYY").format('YYYY-MM-DD');
         }
 
         if (time === '') {

@@ -10,7 +10,6 @@ const customParseFormat = require("dayjs/plugin/customParseFormat");
 dayjs.extend(customParseFormat);
 const df = "DD.MM.YYYY";
 
-
 window.Alpine = Alpine;
 window.TimeTracker = new TimeTracker();
 
@@ -67,3 +66,14 @@ window.focusDateField = function(ev) {
     let dateObj = dayjs(date, df);
     window.datepicker.selectedDates = [dateObj.toDate()];
 }
+
+window.timeUpdateCallback = function () {
+    const input = document.querySelector('input[name="time"]');
+    let tm = dayjs(Date.now()).format("HH:mm");
+    if (input.value === tm) {
+        return;
+    }
+    input.value = tm;
+}
+
+window.intervalTimeInput = setInterval(window.timeUpdateCallback, 1000);
