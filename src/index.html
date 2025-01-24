@@ -14,7 +14,22 @@
         <div class="time-tracker">
             <div class="tracker-list">
                 <template x-for="record in records">
-                    <div x-text="record.message"></div>
+                    <div>
+                        <span x-text="record.ts_fmt"></span>
+                        <span x-text="record.parts.message"></span>
+                        <template x-for="tag in record.parts.tags">
+                            <span class="badge" x-text="tag"></span>
+                        </template>
+                        <a href="#" @click.prevent="record.edit_visible = !record.edit_visible">🖉</a>
+                        <template x-if="record.edit_visible">
+                            <form @submit.prevent="window.submitEdit">
+                                <input type="hidden" name="id" :value="record.id">
+                                <input class="input time" name="time_edit" :value="record.time_fmt">
+                                <input class="input message" name="message_edit" :value="record.message">
+                                <button>edit</button>
+                            </form>
+                        </template>
+                    </div>
                 </template>
             </div>
             <div class="tracker-input">
@@ -22,7 +37,7 @@
                     <form @submit="submitAdd">
                         <div>
                             <a href="#" data-direction="prev" @click.prevent="window.changeDate">←</a>
-                            <input class="input date-picker" readonly name="date" :value="window.TimeTracker.getCurrentDate()" @focus="window.focusDateField">
+                            <input class="input date date-picker" readonly name="date" :value="window.TimeTracker.getCurrentDate()" @focus="window.focusDateField">
                             <a href="#" data-direction="next" @click.prevent="window.changeDate">→</a>
                         </div>
                         <div>

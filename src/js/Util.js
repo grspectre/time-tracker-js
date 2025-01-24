@@ -11,4 +11,16 @@ export default class Util {
         console.log(dateStr);
         console.log(direction);
     }
+
+    static getPartsOfMessage(message) {
+        const tags = [...message.matchAll(/#[\S]+/g)].map((it) => {return it[0]});
+        for (let tag of tags) {
+            message = message.replace(tag, "");
+        }
+        message = message.replaceAll(/\s+/g, ' ').trim();
+        return {
+            tags: tags,
+            message: message,
+        }
+    }
 }

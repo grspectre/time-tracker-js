@@ -40,6 +40,14 @@ window.submitAdd = function(ev) {
     window.TimeTracker.recordList.add(date, time, message);
 }
 
+window.submitEdit = function(ev) {
+    let el = ev.target;
+    let id = el.querySelector('input[name="id"]').value;
+    let time = el.querySelector('input[name="time_edit"]').value;
+    let message = el.querySelector('input[name="message_edit"]').value;
+    window.TimeTracker.recordList.edit(id, time, message);
+}
+
 window.changeDate = function(ev) {
     let el = ev.target;
     let direction = el.dataset.direction;

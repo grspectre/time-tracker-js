@@ -27,6 +27,31 @@ export default class RecordList {
         this.append(new Record(unixTimestamp, message));
     }
 
+    edit(id, time, message) {
+        let record = this.findRecord(id);
+        if (record === null) {
+            return;
+        }
+        let ts = this.getUnixTimeStamp(record.date_fmt, time);
+        record.update(ts, message);
+        record.edit_visible = false;
+    }
+
+    /**
+     * Get Record object by id
+     * 
+     * @param {string} id 
+     * @returns {Record|null}
+     */
+    findRecord(id) {
+        for (let record of this.records) {
+            if (record.id === id) {
+                return record;
+            }
+        }
+        return null;
+    }
+
     /**
      * 
      * @param {Array} records 
@@ -88,7 +113,8 @@ export default class RecordList {
         } else {
             if (time.match(/^\d{2}:\d{2}:\d{2}$/i) === null) {
                 if (time.match(/^\d{2}:\d{2}$/i) !== null) {
-                    time = `${time}:00`;
+                    const secs = dayjs(Date.now()).format('ss');
+                    time = `${time}:${secs}`;
                 } else {
                     return null;
                 }
