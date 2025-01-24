@@ -2,6 +2,13 @@ import Util from "../Util";
 const dayjs = require('dayjs')
 
 export default class Record {
+    /**
+     * 
+     * @param {integer} ts 
+     * @param {string} message 
+     * @param {uuid4|null} id 
+     * @param {boolean} isSaved 
+     */
     constructor(ts, message, id = null, isSaved = false) {
         if (id === null) {
             id = crypto.randomUUID();
@@ -13,17 +20,33 @@ export default class Record {
         this.edit_visible = false;
     }
 
+    /**
+     * Update timestamp and message in Record
+     * 
+     * @param {integer} ts 
+     * @param {string} message 
+     */
     update(ts, message) {
         this.prepareDate(ts);
         this.prepareMessage(message);
         this.isSaved = false;
     }
 
+    /**
+     * Prepare message for output
+     * 
+     * @param {string} message 
+     */
     prepareMessage(message) {
         this.message = message;
         this.parts = Util.getPartsOfMessage(this.message);
     }
 
+    /**
+     * Prepare timestamp for output
+     * 
+     * @param {string} ts 
+     */
     prepareDate(ts) {
         this.ts = ts;
         let dt = dayjs(this.ts);
@@ -32,13 +55,8 @@ export default class Record {
         this.time_fmt = dt.format("HH:mm:ss");
     }
 
-    getString() {
-        const tags = this.parts.tags.map((it) => {return `<span style="color: green">${it}</spam>`});
-        return `${this.parts.message} ${tags}`;
-    }
-
     /**
-     * Сравниваем две записи
+     * Compare two records
      * 
      * @param {Record} record 
      * @returns {0|1|-1}
@@ -51,7 +69,7 @@ export default class Record {
     }
 
     /**
-     * Возвращает словарь с данными
+     * Return dict with data to BD
      * 
      * @returns Array
      */
