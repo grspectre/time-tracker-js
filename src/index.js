@@ -62,7 +62,9 @@ window.changeDate = function(ev) {
     } else if (direction === 'prev') {
         dateObj = dateObj.subtract(1, 'days');
     }
-    input.value = dateObj.format(df);
+    const dateStr = dateObj.format(df);
+    input.value = dateStr;
+    window.TimeTracker.setDate(dateStr);
 }
 
 window.focusDateField = function(ev) {

@@ -6,6 +6,7 @@ dayjs.extend(customParseFormat);
 export default class RecordList {
     key = 'tt_record_list';
     saveInterval = 10;
+    date;
 
     constructor() {
         this.records = [];
@@ -57,6 +58,17 @@ export default class RecordList {
      */
     setRecords(records) {
         this.records = records;
+        this.loadCached();
+    }
+
+    /**
+     * 
+     * @param {string} date 
+     */
+    setDate(date) {
+        this.date1 = dayjs(date, "DD.MM.YYYY");
+        this.date1 = this.date1.set('hour', 0).set('minute', 0).set('second', 0);
+        this.date2 = this.date1.set('hour', 23).set('minute', 59).set('second', 59);
         this.loadCached();
     }
 
@@ -130,13 +142,16 @@ export default class RecordList {
     }
 
     loadCached() {
+        this.records.length = 0;
         let data = localStorage.getItem(this.key);
         if (data === null) {
             return;
         }
         let parsed = JSON.parse(data);
         for (let it of parsed) {
-            this.records.push(new Record(it.ts, it.message, it.id, true));
+            if (it.ts >= this.date1.valueOf() && it.ts <= this.date2.valueOf()) {
+                this.records.push(new Record(it.ts, it.message, it.id, true));
+            }
         }
     }
 

@@ -16,10 +16,15 @@ export default class TimeTracker {
         this.loopInterval = setInterval(() => {
             this.loop();
         }, this.interval);
+        this.setDate(this.getCurrentDate());
     }
 
     setRecords(records) {
         this.recordList.setRecords(records);
+    }
+
+    setDate(date) {
+        this.recordList.setDate(date);
     }
 
     getCurrentDate() {
