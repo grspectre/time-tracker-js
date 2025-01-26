@@ -9,7 +9,6 @@ export default class RecordList {
 
     constructor() {
         this.records = [];
-        this.loadCached();
     }
 
     /**
@@ -34,7 +33,7 @@ export default class RecordList {
         }
         let ts = this.getUnixTimeStamp(record.date_fmt, time);
         record.update(ts, message);
-        record.edit_visible = false;
+        record.editVisible = false;
     }
 
     /**
@@ -58,7 +57,7 @@ export default class RecordList {
      */
     setRecords(records) {
         this.records = records;
-//        this.loadCached();
+        this.loadCached();
     }
 
     /**
@@ -136,10 +135,28 @@ export default class RecordList {
             return;
         }
         let parsed = JSON.parse(data);
-        //parsed.shift()
+        for (let it of parsed) {
+            this.records.push(new Record(it.ts, it.message, it.id, true));
+        }
     }
 
     saveCached() {
-
+        const hasNotSaved = this.records.reduce((acc, it) => {
+            if (!it.isSavedToCache) {
+                acc = true;
+            }
+            return acc;
+        }, false);
+        if (hasNotSaved) {
+            let items = [];
+            for (const record of this.records) {
+                if (!record.isSavedToCache) {
+                    record.isSavedToCache = true;
+                }
+                items.push(record.getDict());
+            }
+            const data = JSON.stringify(items);
+            localStorage.setItem(this.key, data);
+        }
     }
 }

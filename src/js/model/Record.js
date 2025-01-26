@@ -15,9 +15,10 @@ export default class Record {
         }
         this.id = id;
         this.isSaved = isSaved;
+        this.isSavedToCache = isSaved;
         this.prepareDate(ts);
         this.prepareMessage(message);
-        this.edit_visible = false;
+        this.editVisible = false;
     }
 
     /**

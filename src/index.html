@@ -20,8 +20,8 @@
                         <template x-for="tag in record.parts.tags">
                             <span class="badge" x-text="tag"></span>
                         </template>
-                        <a href="#" @click.prevent="record.edit_visible = !record.edit_visible">🖉</a>
-                        <template x-if="record.edit_visible">
+                        <a href="#" @click.prevent="record.editVisible = !record.editVisible">🖉</a>
+                        <template x-if="record.editVisible">
                             <form @submit.prevent="window.submitEdit">
                                 <input type="hidden" name="id" :value="record.id">
                                 <input class="input time" name="time_edit" :value="record.time_fmt">

@@ -4,12 +4,18 @@ const dayjs = require('dayjs');
 
 export default class TimeTracker {
     prop = "это самое лучшее свойство";
+    interval = 1000;
     token;
     recordList;
+    loopIntervalId;
 
     constructor() {
         this.token = new Token();
         this.recordList = new RecordList();
+        this.loop();
+        this.loopInterval = setInterval(() => {
+            this.loop();
+        }, this.interval);
     }
 
     setRecords(records) {
@@ -18,5 +24,9 @@ export default class TimeTracker {
 
     getCurrentDate() {
         return dayjs(Date.now()).format("DD.MM.YYYY");
+    }
+
+    loop() {
+        this.recordList.saveCached();
     }
 }
