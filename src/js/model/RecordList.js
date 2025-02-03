@@ -35,6 +35,8 @@ export default class RecordList {
         let ts = this.getUnixTimeStamp(record.date_fmt, time);
         record.update(ts, message);
         record.editVisible = false;
+        record.isSavedToCache = false;
+        this.append(record);
     }
 
     /**
@@ -44,9 +46,9 @@ export default class RecordList {
      * @returns {Record|null}
      */
     findRecord(id) {
-        for (let record of this.records) {
-            if (record.id === id) {
-                return record;
+        for (let idx in this.records) {
+            if (id === this.records[idx].id) {
+                return this.records.splice(idx, 1)[0];
             }
         }
         return null;
